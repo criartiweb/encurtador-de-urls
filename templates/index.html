@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Encurtador de URLs</title>
+    <link rel="stylesheet" charset="iso-8859-1" href="{$linkcss}main.css" />
+    <link rel="shortcut icon" href="{$linkimg}favicon.ico" />
+	<script type="text/javascript" src="{$linklibs}jquery/jquery.js"></script>
+    <script type="text/javascript" src="{$linkjs}main.js"></script>	
+</head>
+<body>
+	<div id="button" style="border: solid 1px #333;border-top: none;background-color: #FF9;padding: 10px;position: fixed;top: 0;right: 10px;color: #333;font-size: 15px;background-image: url(img/arrow.png);background-repeat: no-repeat;padding-left: 30px;background-position: 7px 34px;">
+		<b>Encurte suas URLs!</b><br /><br />
+		Arraste este bot&atilde;o <a {literal}href="javascript:(function(){if(navigator.userAgent.toLowerCase().indexOf('opera') != -1 &amp;&amp; window.event.preventDefault) window.event.preventDefault();this.newWindow = window.open('{/literal}{$link}{literal}popup.php?url='+escape(document.location.href), 'encurtador', 'toolbar=0,scrollbars=0,location=0,status=1,menubar=0,width=400,height=400,resizable=1,left='+((screen.width/2)-200)+',top='+((screen.height/2)-200));this.newWindow.focus();this.newWindow.opener=window;})();"{/literal} style="padding: 5px 10px;background-color: #EFEFEF;border: solid 1px #CCC;color: #333;text-decoration: none;cursor: pointer;">Encurtar</a> para sua barra dos favoritos.<br />
+	</div>
+	
+    <div id="result">
+    
+    	{if $result}
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            	<tr>
+                	<td style="width:120px;">URL Original</td>
+                    <td>{$long_url}</td>
+                </tr>
+                <tr>
+                	<td>URL encurtada</td>
+                    <td><b>http://URL_ENCURTADOR/{$short_url}</b></td>
+                </tr>
+            </table>
+            
+            <br />
+            
+            {$stats}
+        {else}
+            Bem-vindo ao <b>Encurtador de URLs</b><br />
+        {/if}
+    	
+    </div>
+    
+    <div id="new">
+        <form id="frmNew" method="post" onsubmit="return validateNew()">
+            URL<br />
+            <input type="text" id="url" name="longurl" class="input" /> <input type="submit" class="submit" value="Encurtar URL" /><br />
+            <small style="color:#999999;">Informe a URL com o "http://" ou "https://"</small>
+        </form>
+    </div>
+    
+    <br /><br />
+    
+    <center>
+        <b>Nossos links ({$total_urls} links)</b>
+    </center>
+    
+    <br />
+
+    <ul style="text-align:center;list-style:none;margin:0 auto;padding:0;width: 662px;margin-bottom: 40px;clear: both;overflow: hidden;">
+        {foreach from=$listurls item=item}
+            <li style="margin:0 30px 0 0;padding:0;float: left;width: 300px;" onmousemove="$(this).css('background-color','#EFEFEF')" onmouseout="$(this).css('background-color','#FFF')">
+            	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+            		<tr>
+            			<td style="text-align: left;">
+            				<a href="{$item.url}" class="link" target="_blank" alt="{$item.longa}" title="{$item.longa}">{$item.url}</a>
+            			</td>
+            			<td style="text-align: right;width: 130px;">
+            				<span style="font-size:11px;color:#999999;">{if $item.views == 0}Nenhuma visualiza&ccedil;&atilde;o{elseif $item.views == 1}1 visualiza&ccedil;&atilde;o{else}{$item.views} visualiza&ccedil;&otilde;es{/if}</span>
+            			</td>
+            		</tr>
+            	</table>
+        	</li>
+        {/foreach}        
+    </ul>
+
+    <div id="contadorGeral">
+    	Total de cliques: {$total_cliques}
+    </div>
+</body>
+</html>

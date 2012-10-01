@@ -1,0 +1,12 @@
+RewriteEngine On
+
+#Altere as informações abaixo com cuidado.
+#RewriteCond %{HTTP_HOST} !^URL_ENCURTADOR.com$ [NC]
+#RewriteRule ^(.*)$ http://URL_ENCURTADOR.com/$1 [L,R=301]
+
+Options -Indexes
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule (.*) index.php?page=$1
